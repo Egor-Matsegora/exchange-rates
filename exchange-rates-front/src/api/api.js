@@ -8,7 +8,7 @@ export const api = {
   // },
   fetchCurrency() {
     return new Promise((resolve, reject) => {
-      setTimeout(resolve(currency), 200)
+      setTimeout(() => resolve(currency), 500)
     })
   },
   // fetchCurrencyByDate(date) {
@@ -20,7 +20,7 @@ export const api = {
   fetchCurrencyByDate(date) {
     // date format is yyyy/mm/dd
     return new Promise((resolve, reject) => {
-      setTimeout(resolve(currency), 200)
+      setTimeout(() => resolve(currency), 500)
     })
   },
 }
