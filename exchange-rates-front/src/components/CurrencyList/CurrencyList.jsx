@@ -9,7 +9,8 @@ import { getCurrencyAsync } from '../../store/actions';
 const mapStateToPorps = (state) => ({ 
   currency: state.currency.currency,
   currencyLoading: state.currency.currencyLoading,
-  filteredCurency: state.currency.filteredCurency
+  filteredCurency: state.currency.filteredCurency,
+  isFiltering: state.currency.isFiltering
 });
 
 const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyAsync }, dispatch)});
@@ -36,15 +37,15 @@ class CurrencyList extends Component {
       <div className="list__item" key={ item.ID }>
         <Currency currency={ item }/>
       </div>
-    )) : '...'
+    )) : '...';
 
-    const loadingTemplate = <p> ...loading... </p>
+    const loadingTemplate = (<p> ...loading... </p>);
 
     return (
       <div className="list">
         { isLoading ? loadingTemplate : defaultTemplate }
       </div>
-    )
+    );
   }
 };
 

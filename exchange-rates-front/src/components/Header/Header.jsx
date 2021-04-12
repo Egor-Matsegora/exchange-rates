@@ -4,14 +4,16 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { Logo } from "../../shared/Logo/Logo";
 import { BaseCurrencySelect } from "../../shared/BaseCurrencySelect";
-import { filterCurrency } from "../../store/actions";
+import { Filter } from "../../shared/Filter";
+import { filterCurrency, abortFiltration } from "../../store/actions";
+
 import './Header.sass';
 
-const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators(filterCurrency, dispatch)});
+const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators({filterCurrency, abortFiltration}, dispatch)});
 
 class Header extends Component {
   componentDidMount() {
-
+    console.log(this.props);
   }
 
   render() {
@@ -21,12 +23,13 @@ class Header extends Component {
           <Logo/>
         </div>
         <div className="header__nav">
-          {/* <div className="header__select">{
-            <BaseCurrencySelect 
+          <div className="header__nav-item">
+            {/* <BaseCurrencySelect 
             baseCurrency={ 'RUB' }
             baseCurrencyArray={ ['RUB', 'RUB1', 'RUB2', 'RUB3'] }
-            />
-          </div>} */}
+            /> */}
+            <Filter {...this.props.actions}/>
+          </div>
         </div>
       </header>
     )
