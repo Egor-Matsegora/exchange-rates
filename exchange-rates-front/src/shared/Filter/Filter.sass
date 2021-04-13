@@ -1,6 +1,60 @@
 @import 'assets/styles/common'
 
 .filter
-  position: relative
-  max-width: 150px
+  display: flex
+
+.filter__container
   overflow: hidden
+  transition: width 150ms linear
+  position: relative
+
+  &--closed
+    width: 0
+
+  &--open
+    width: 200px
+
+.filter__input
+  display: block
+  width: 190px
+  padding: 0 25px 0 5px
+  height: 30px
+  font-size 22px
+  background-color: transparent
+  border-radius: 0
+  border: 0
+  border-bottom: 2px solid $text-color-light
+  outline: none
+  transition: all 150ms linear
+
+  &:focus
+    border-color: $text-color-standart
+
+.filter__button
+  border: 0
+  background-color: transparent
+  display: inline-block
+  outline: none
+
+.filter__open
+  width: 30px
+  height: 30px
+  background-image: url('./magnifier.svg')
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: contain
+  cursor: pointer
+
+.filter__reset
+  position: absolute
+  top: 5px
+  right: 15px
+  width: 15px
+  height: 15px
+  background-image: url('./cancel.svg')
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: contain
+  cursor: pointer
+
+
