@@ -8,19 +8,30 @@ export const getCurrencyAsync = () => (dispatch, getState) =>  {
   });
   api.fetchCurrency()
     .then(res => {
-      const currency = [];
-      for (const key in res.Valute) {
-        if (res.Valute[key]) {
-          const valute = res.Valute[key];
-          currency.push(valute);
+      // if (`${res.status}`.startsWith('2') || `${res.status}`.startsWith('3')) {
+        const currency = [];
+
+        for (const key in res.Valute) {
+          if (res.Valute[key]) {
+            const valute = res.Valute[key];
+            currency.push(valute);
+          }
         }
-      }
-      dispatch({
-        type: types.GET_CURRENCY_SUCCESS,
-        payload: currency
-      });
+        dispatch({
+          type: types.GET_CURRENCY_SUCCESS,
+          payload: currency
+        });
+      // } else {
+      //   dispatch({
+      //     type: types.GET_CURRENCY_ERROR,
+      //     payload: 'ошибка загрузки данных'
+      //   })
+      // }
     })
-    .catch(console.error)
+    .catch(err => dispatch({
+      type: types.GET_CURRENCY_ERROR,
+      payload: 'ошибка загрузки данных'
+    }))
 }
 
 export const fillCurrencySuccess = (currency) => ({
