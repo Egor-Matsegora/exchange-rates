@@ -62,3 +62,8 @@ export const calculateCurrency = (currencyValue = 1 ) => ({
   type: types.CALCULATE_CURRENCY,
   payload: currencyValue
 });
+
+export const setActiveCurrencyList = (activeCurrencyList) => ({
+  type: types.SET_ACTIVE_CURRENCY_LIST,
+  payload: activeCurrencyList,
+})

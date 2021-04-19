@@ -1,0 +1,39 @@
+@import 'assets/styles/common'
+
+.options
+  position: relative
+  height: 30px
+
+.options__icon
+  cursor: pointer
+  width: 65px
+  text-align: center
+  height: 100%
+
+.options__dropdown
+  position: absolute
+  top: 100%
+  right: 0
+  padding: 10px
+  min-width: 200px
+  background-color: $bg-color-light
+  border-radius: 6px
+  border: 1px solid $text-color-dark
+  overflow: hidden
+  transition: opacity 250ms linear
+
+.options__dropdown--closed
+  height: 0
+  opacity: 0
+  display: none
+
+.options__dropdown--open
+  height: auto
+  opacity: 1
+  display: block
+
+.options__list
+  display: flex
+
+.options__column
+  width: 50%

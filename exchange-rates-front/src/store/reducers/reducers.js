@@ -7,7 +7,8 @@ const initialState = {
   isFiltering: false,
   calculatedCurrency: null,
   baseCurrency: 'USD',
-  calculatedCurrencyValue: null
+  calculatedCurrencyValue: null,
+  activeCurrencyList: ['USD']
 }
 
 export const currencyReducer = (state = initialState, action) => {
@@ -63,6 +64,12 @@ export const currencyReducer = (state = initialState, action) => {
       return {
         ...state,
         calculatedCurrencyValue: Value / Nominal * action.payload
+      }
+
+    case types.SET_ACTIVE_CURRENCY_LIST:
+      return {
+        ...state,
+        activeCurrencyList: action.payload.length ? action.payload : ['USD']
       }
 
     default:

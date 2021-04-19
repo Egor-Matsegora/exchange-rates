@@ -36,6 +36,7 @@ const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, acti
         onChange={ calculate }
       />
       <span className="calculator__text">
+        {/* { baseCurrencyName } = {  Math.round( calculatedValue * 100 ) / 100  } RUB */}
         { baseCurrencyName } = {  Math.round( calculatedValue * 100 ) / 100  } RUB
       </span>
       <div className="calculator__select">
