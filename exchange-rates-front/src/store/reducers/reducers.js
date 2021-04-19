@@ -4,7 +4,10 @@ const initialState = {
   currency: [],
   currencyLoading: false,
   filteredCurency: [],
-  isFiltering: false
+  isFiltering: false,
+  calculatedCurrency: null,
+  baseCurrency: 'USD',
+  calculatedCurrencyValue: null
 }
 
 export const currencyReducer = (state = initialState, action) => {
@@ -30,7 +33,7 @@ export const currencyReducer = (state = initialState, action) => {
       };
 
     case types.FILTER_CURRENCY:
-      let filterResult = state.currency.filter(cur =>
+      const filterResult = state.currency.filter(cur =>
         cur.CharCode.toLowerCase().includes(action.payload.toLowerCase())
           || cur.Name.toLowerCase().includes(action.payload.toLowerCase())
       );
@@ -46,6 +49,20 @@ export const currencyReducer = (state = initialState, action) => {
         ...state,
         isFiltering: false,
         filteredCurency: []
+      }
+
+    case types.SET_BASE_CURRENCY:
+      return {
+        ...state,
+        baseCurrency: action.payload
+      }
+
+    case types.CALCULATE_CURRENCY:
+      const {Nominal, Value} = state.currency.find(cur => cur.CharCode === state.baseCurrency);
+
+      return {
+        ...state,
+        calculatedCurrencyValue: Value / Nominal * action.payload
       }
 
     default:
