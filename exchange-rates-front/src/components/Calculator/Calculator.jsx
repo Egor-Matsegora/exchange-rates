@@ -15,10 +15,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ setBaseCurrency, calculateCurrency }, dispatch)});
 
 const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, actions }) => {
-  const [ currentValue, setValue ] = useState(1)
+  const [ currentValue, setCurrentValue ] = useState(1)
 
   const calculate = (e) => {
-    setValue(+e.target.value);
+    setCurrentValue(+e.target.value);
     actions.calculateCurrency(+e.target.value);
   }
 
@@ -36,7 +36,7 @@ const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, acti
         onChange={ calculate }
       />
       <span className="calculator__text">
-        { baseCurrencyName } = { calculatedValue } RUB
+        { baseCurrencyName } = {  Math.round( calculatedValue * 100 ) / 100  } RUB
       </span>
       <div className="calculator__select">
         <BaseCurrencySelect
