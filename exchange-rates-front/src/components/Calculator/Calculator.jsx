@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setBaseCurrency, calculateCurrency } from "../../store/actions";
 import { BaseCurrencySelect } from "../../shared/BaseCurrencySelect";
+import './Calculator.sass';
 
 const mapStateToProps = (state) => ({
   baseCurrencyName: state.currency.baseCurrency,
@@ -29,18 +30,21 @@ const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, acti
   return (
     <div className="calculator">
       <input
+        className="calculator__input"
         type="text"
         value={ currentValue }
         onChange={ calculate }
       />
-      { baseCurrencyName } = { calculatedValue } RUB
-      {
-        currency.length && <BaseCurrencySelect
+      <span className="calculator__text">
+        { baseCurrencyName } = { calculatedValue } RUB
+      </span>
+      <div className="calculator__select">
+        <BaseCurrencySelect
           baseCurrency={ baseCurrencyName }
           baseCurrencyArray={ currency.map(cur => cur.CharCode) }
           onBaseCurrencyChange={ setBase }
         />
-      }
+      </div>
     </div>
   )
 }

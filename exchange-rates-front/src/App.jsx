@@ -10,7 +10,9 @@ const App = () => {
         <Header/>
       </div>
       <div className="app__content">
-        <Calculator/>
+        <div className="app__calculator">
+          <Calculator/>
+        </div>
         <CurrencyList/>
       </div>
     </div>
