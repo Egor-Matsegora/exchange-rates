@@ -50,13 +50,13 @@ export const currencyReducer = (state = initialState, action) => {
         ...state,
         isFiltering: false,
         filteredCurency: []
-      }
+      };
 
     case types.SET_BASE_CURRENCY:
       return {
         ...state,
         baseCurrency: action.payload
-      }
+      };
 
     case types.CALCULATE_CURRENCY:
       const {Nominal, Value} = state.currency.find(cur => cur.CharCode === state.baseCurrency);
@@ -64,12 +64,12 @@ export const currencyReducer = (state = initialState, action) => {
       return {
         ...state,
         calculatedCurrencyValue: Value / Nominal * action.payload
-      }
+      };
 
     case types.SET_ACTIVE_CURRENCY_LIST:
       return {
         ...state,
-        activeCurrencyList: action.payload.length ? action.payload : ['USD']
+        activeCurrencyList: action.payload.length ? [...action.payload] : ['USD']
       }
 
     default:

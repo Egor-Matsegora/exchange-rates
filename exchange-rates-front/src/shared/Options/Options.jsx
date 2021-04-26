@@ -21,15 +21,18 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
     !result.length && result.push('USD');
     setactiveCurrencyNames(result);
     setActiveCurrencyList(result);
+    console.log(currency);
   }
 
   return (
     <div className="options">
       <div
-        className="options__icon"
+        className={`options__icon ${openStatus ? 'options__icon--open' : 'options__icon--closed'}`}
         onClick={ handleOpenStatus }
       >
-        { openStatus ? 'закрыть' : 'опции' }
+        <div className="options__icon-line options__icon-line--top"></div>
+        <div className="options__icon-line options__icon-line--center"></div>
+        <div className="options__icon-line options__icon-line--bottom"></div>
       </div>
       <div className={`options__dropdown ${openStatus ? 'options__dropdown--open' : 'options__dropdown--closed'}`}>
         <div className="options__list">
@@ -40,6 +43,7 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
                 <div
                   className="options__checkbox"
                   key={ cur.ID }
+                  title={ cur.Name }
                 >
                   <input
                     type="checkbox"
@@ -48,7 +52,10 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
                     checked={ activeCurrencyNames.includes(cur.CharCode) }
                     onChange={ handleActiveCurChange }
                   />
-                  <label htmlFor={cur.ID}>
+                  <label
+                    className="options__label"
+                    htmlFor={cur.ID}
+                  >
                     { cur.CharCode }
                   </label>
                 </div>

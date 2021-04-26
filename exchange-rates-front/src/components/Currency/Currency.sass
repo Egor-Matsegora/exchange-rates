@@ -3,26 +3,46 @@
 .currency
   display: flex
   justify-content: space-between
-  padding: 50px
   border-radius: 10px
   border: 1px solid $text-color-light
   box-shadow: 2px 2px 6px transparentize($text-color-light, 0.5)
   color: $text-color-standart
 
+.currency--primary
+  padding: 50px
+
+.currency--secondary
+  padding: 20px 50px
+
 .currency__name
-  font-size: 24px
   padding-bottom: 10px
+
+.currency__name--primary
+  font-size: 24px
+
+.currency__name--secondary
+  font-size: 18px
 
 .currency__code
   text-transform: uppercase
-  font-size: 14px
   color: $text-color-light
+
+.currency__code--primary
+  font-size: 14px
+
+.currency__code--secondary
+  font-size: 12px
 
 .currency__info
   align-self: stretch
   display: flex
   align-items: center
+
+.currency__info--primary
   font-size: 26px
+
+.currency__info--secondary
+  font-size: 22px
 
 .currency__nominal
   color: $text-color-dark
@@ -30,7 +50,6 @@
   padding-right: 10px
 
 .currency__value
-  font-size: 30px
 
   &::after
     content: ''
@@ -44,12 +63,12 @@
   color: transparentize($text-color-success, 0.3)
 
   &::after
-    border-width: 0 10px 20px 10px
+    border-width: 0 9px 18px 9px
     border-color: transparent transparent $text-color-success  transparent
 
 .currency__value--negative
   color: transparentize($text-color-error, 0.3)
 
   &::after
-    border-width: 20px 10px 0 10px
+    border-width: 18px 9px 0 9px
     border-color: $text-color-error transparent transparent transparent

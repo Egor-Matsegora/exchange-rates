@@ -1,5 +1,4 @@
 
-import { Component, } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { Logo } from "../../shared/Logo/Logo";
@@ -23,13 +22,16 @@ const Header = ({actions, currency, activeCurrencyList}) => {
     </div>
     <div className="header__nav">
       <div className="header__nav-item">
-        <Filter { ...actions }/>
+        <Filter
+          filterCurrency={ actions.filterCurrency }
+          abortFiltration={ actions.abortFiltration }
+        />
       </div>
       <div className="header__nav-item">
         <Options
           currency={ currency }
           activeCurrencyList={ activeCurrencyList }
-          setActiveCurrencyList={ setActiveCurrencyList }
+          setActiveCurrencyList={ actions.setActiveCurrencyList }
         />
       </div>
     </div>

@@ -34,13 +34,11 @@ class CurrencyList extends Component {
     const currencyArray = this.props.isFiltering ? this.props.filteredCurency : this.props.currency;
     const isLoading = this.props.currencyLoading;
 
-    const defaultTemplate = currencyArray.length ? currencyArray
+    const defaultTemplate = currencyArray.length ? [ ...currencyArray ]
       .sort(item => this.props.activeCurrencyList.includes(item.CharCode) ? -1 : 1)
       .map(item => (
         <div className="list__item" key={ item.ID }>
-          {
-            this.props.activeCurrencyList.includes(item.CharCode) ? <Currency currency={ item }/> : 'хрень'
-          }
+          <Currency currency={ item } isPrimary={ this.props.activeCurrencyList.includes(item.CharCode) }/>
         </div>
     )) : '...';
 
