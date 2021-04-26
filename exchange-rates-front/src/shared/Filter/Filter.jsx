@@ -11,8 +11,6 @@ export const Filter = ({filterCurrency, abortFiltration}) => {
     setQueryString(event.target.value);
     event.target.value ? filterCurrency(queryString) : abortFiltration()
   }
-  const handleInputReset = () => {
-  }
   const handleOpenInput = () => {
     setInputOpenState(true);
     inputEl.current.focus();

@@ -4,10 +4,37 @@ import { useState } from 'react';
 export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList }) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [activeCurrencyNames, setactiveCurrencyNames] = useState(activeCurrencyList);
+  const [filterValue, setFilterValue] = useState('');
+  const [filteredCurrency, setFilteredCurrency] = useState([]);
 
   const handleOpenStatus = () => {
-    setOpenStatus(openStatus ? false : true)
+    setOpenStatus(openStatus ? false : true);
+    resetFilter();
   }
+
+  const mapCurrency = (currency) => (
+    currency.map(cur => (
+      <div
+        className="options__checkbox"
+        key={ cur.ID }
+        title={ cur.Name }
+      >
+        <input
+          type="checkbox"
+          id={ cur.ID }
+          value={ cur.CharCode }
+          checked={ activeCurrencyNames.includes(cur.CharCode) }
+          onChange={ handleActiveCurChange }
+        />
+        <label
+          className="options__label"
+          htmlFor={cur.ID}
+        >
+          { cur.CharCode } ( {cur.Name} )
+        </label>
+      </div>
+    ))
+  );
 
   const handleActiveCurChange = (e) => {
     const value = e.target.value
@@ -21,7 +48,19 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
     !result.length && result.push('USD');
     setactiveCurrencyNames(result);
     setActiveCurrencyList(result);
-    console.log(currency);
+  }
+
+  const handleFilter = (event) => {
+    const value = event.target.value
+    setFilterValue(value);
+    const filterResult = currency.filter(cur => {
+      return cur.CharCode.toLowerCase().includes(value.trim().toLowerCase()) || cur.Name.toLowerCase().includes(value.trim().toLowerCase());
+    })
+    setFilteredCurrency(filterResult)
+  }
+
+  const resetFilter = () => {
+    setFilterValue('');
   }
 
   return (
@@ -35,53 +74,25 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
         <div className="options__icon-line options__icon-line--bottom"></div>
       </div>
       <div className={`options__dropdown ${openStatus ? 'options__dropdown--open' : 'options__dropdown--closed'}`}>
-        <div className="options__list">
-          <div className="options__column">
-            Главные валюты
+        <div className="options__column">
+          <div className="options__title">Главные валюты</div>
+          <div className="options__filter">
+            <input
+              type="text"
+              className="options__filter-input"
+              value={ filterValue }
+              onChange={ handleFilter }
+            />
             {
-              currency.map(cur => (
-                <div
-                  className="options__checkbox"
-                  key={ cur.ID }
-                  title={ cur.Name }
-                >
-                  <input
-                    type="checkbox"
-                    id={ cur.ID }
-                    value={ cur.CharCode }
-                    checked={ activeCurrencyNames.includes(cur.CharCode) }
-                    onChange={ handleActiveCurChange }
-                  />
-                  <label
-                    className="options__label"
-                    htmlFor={cur.ID}
-                  >
-                    { cur.CharCode }
-                  </label>
-                </div>
-              ))
+              filterValue && <button
+                className="options__filter-reset"
+                onClick={ resetFilter }
+              ></button>
             }
           </div>
-          {/* <div className="options__column">
-            Все валюты
-            {
-              currency.map(cur => (
-                <div
-                  className="options__checkbox"
-                  key={ cur.ID }
-                >
-                  <input
-                    type="checkbox"
-                    id={ cur.ID }
-                    value={ cur.CharCode }
-                  />
-                  <label htmlFor={cur.ID}>
-                    { cur.CharCode }
-                  </label>
-                </div>
-              ))
-            }
-          </div> */}
+          <div className="options__list">
+            { mapCurrency( filterValue.trim() ? filteredCurrency : currency ) }
+          </div>
         </div>
       </div>
     </div>

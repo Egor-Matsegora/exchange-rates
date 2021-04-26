@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { Currency } from '../Currency'
 import './CurrencyList.sass';
 import { connect } from 'react-redux';
@@ -16,40 +16,45 @@ const mapStateToPorps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyAsync }, dispatch)});
 
-class CurrencyList extends Component {
-  static propTypes = {
-    list: PropTypes.array
-  }
+export const CurrencyList = ({
+    actions,
+    isFiltering,
+    filteredCurency,
+    currency,
+    activeCurrencyList,
+    currencyLoading
+  }) => {
 
-  static defaultPros = {
-    list: []
-  }
+  const {getCurrencyAsync} = actions
 
-  componentDidMount() {
-    const { actions } = this.props;
-    actions.getCurrencyAsync();
-  }
+  useEffect(() => getCurrencyAsync(), [getCurrencyAsync]);
 
-  render() {
-    const currencyArray = this.props.isFiltering ? this.props.filteredCurency : this.props.currency;
-    const isLoading = this.props.currencyLoading;
+  const currencyArray = isFiltering ? filteredCurency : currency;
+  const isLoading = currencyLoading;
 
-    const defaultTemplate = currencyArray.length ? [ ...currencyArray ]
-      .sort(item => this.props.activeCurrencyList.includes(item.CharCode) ? -1 : 1)
-      .map(item => (
-        <div className="list__item" key={ item.ID }>
-          <Currency currency={ item } isPrimary={ this.props.activeCurrencyList.includes(item.CharCode) }/>
-        </div>
-    )) : '...';
-
-    const loadingTemplate = (<p> ...loading... </p>);
-
-    return (
-      <div className="list">
-        { isLoading ? loadingTemplate : defaultTemplate }
+  const defaultTemplate = currencyArray.length ? [ ...currencyArray ]
+    .sort(item => activeCurrencyList.includes(item.CharCode) ? -1 : 1)
+    .map(item => (
+      <div className="list__item" key={ item.ID }>
+        <Currency currency={ item } isPrimary={ activeCurrencyList.includes(item.CharCode) }/>
       </div>
-    );
-  }
+  )) : '...';
+
+  const loadingTemplate = (<p> ...loading... </p>);
+
+  return (
+    <div className="list">
+      { isLoading ? loadingTemplate : defaultTemplate }
+    </div>
+  );
 };
+
+CurrencyList.propTypes = {
+  list: PropTypes.array
+}
+
+CurrencyList.defaultPros = {
+  list: []
+}
 
 export default connect(mapStateToPorps, mapDispatchToProps)(CurrencyList);
