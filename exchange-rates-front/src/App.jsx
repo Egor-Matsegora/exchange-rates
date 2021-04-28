@@ -1,6 +1,9 @@
+import { Switch, Route } from 'react-router-dom';
+
 import Header from './components/Header';
-import CurrencyList from './components/CurrencyList';
-import Calculator from './components/Calculator';
+import { Home } from './pages/Home';
+import { CurrencyPage } from './pages/CurrencyPage';
+
 import './App.sass';
 
 const App = () => {
@@ -10,10 +13,20 @@ const App = () => {
         <Header/>
       </div>
       <div className="app__content">
-        <div className="app__calculator">
-          <Calculator/>
-        </div>
-        <CurrencyList/>
+        <Switch>
+
+          <Route
+            path="/"
+            component={ Home }
+            exact
+          />
+          <Route
+            path="/:charcode"
+            component={ CurrencyPage }
+            exact
+          />
+
+        </Switch>
       </div>
     </div>
   );

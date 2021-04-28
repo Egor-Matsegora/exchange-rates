@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
+
+import { Link } from 'react-router-dom';
+
 import './Currency.sass';
 
 export const Currency = ({currency, isPrimary}) => {
   return (
     <div className={ `currency ${isPrimary ? 'currency--primary' : 'currency--secondary'}` }>
       <div className="currency__text">
-        <div className={ `currency__name ${isPrimary ? 'currency__name--primary' : 'currency__name--secondary'}` }>
+        <Link
+          to={`/${currency.CharCode}`}
+          className={ `currency__name ${isPrimary ? 'currency__name--primary' : 'currency__name--secondary'}` }
+        >
           { currency.Name }
-        </div>
+        </Link>
         <span className={ `currency__code ${isPrimary ? 'currency__code--primary' : 'currency__code--secondary'}` }>
           { currency.CharCode }
         </span>

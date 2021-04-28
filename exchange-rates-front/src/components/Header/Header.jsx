@@ -1,6 +1,8 @@
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+
 import { Logo } from "../../shared/Logo/Logo";
 import { Options } from "../../shared/Options";
 import { Filter } from "../../shared/Filter";
@@ -16,10 +18,10 @@ const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators({ filter
 
 const Header = ({actions, currency, activeCurrencyList}) => {
   return (
-    <header className="header">
-    <div className="header__log">
+  <header className="header">
+    <Link to='/' exact className="header__logo">
       <Logo/>
-    </div>
+    </Link>
     <div className="header__nav">
       <div className="header__nav-item">
         <Filter
