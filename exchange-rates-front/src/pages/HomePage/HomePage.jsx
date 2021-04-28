@@ -1,5 +1,5 @@
-import Calculator from '../../components/Calculator';
-import CurrencyList from '../../components/CurrencyList';
+import Calculator from 'components/Calculator';
+import CurrencyList from 'components/CurrencyList';
 
 import './HomePage.sass';
 

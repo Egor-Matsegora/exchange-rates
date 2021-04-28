@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
-import { Logo } from "../../shared/Logo/Logo";
-import { Options } from "../../shared/Options";
-import { Filter } from "../../shared/Filter";
-import { filterCurrency, abortFiltration, setActiveCurrencyList } from "../../store/actions";
+import { Logo } from "shared/Logo/Logo";
+import { Options } from "shared/Options";
+import { Filter } from "shared/Filter";
+import { filterCurrency, abortFiltration, setActiveCurrencyList } from "store/actions";
 
 import './Header.sass';
 

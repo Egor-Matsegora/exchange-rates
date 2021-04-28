@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { Currency } from '../Currency'
-import './CurrencyList.sass';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getCurrencyAsync } from '../../store/actions';
+
+import { Currency } from 'components/Currency'
+import { getCurrencyAsync } from 'store/actions';
+
+import './CurrencyList.sass';
 
 const mapStateToPorps = (state) => ({
   currency: state.currency.currency,
