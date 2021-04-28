@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { Currency } from 'components/Currency'
-import { getCurrencyAsync } from 'store/actions';
 
 import './CurrencyList.sass';
 
@@ -16,20 +15,13 @@ const mapStateToPorps = (state) => ({
   activeCurrencyList: state.currency.activeCurrencyList
 });
 
-const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyAsync }, dispatch)});
-
 export const CurrencyList = ({
-    actions,
     isFiltering,
     filteredCurency,
     currency,
     activeCurrencyList,
     currencyLoading
   }) => {
-
-  const {getCurrencyAsync} = actions
-
-  useEffect(() => getCurrencyAsync(), [getCurrencyAsync]);
 
   const currencyArray = isFiltering ? filteredCurency : currency;
   const isLoading = currencyLoading;
@@ -59,4 +51,4 @@ CurrencyList.defaultPros = {
   list: []
 }
 
-export default connect(mapStateToPorps, mapDispatchToProps)(CurrencyList);
+export default connect(mapStateToPorps)(CurrencyList);

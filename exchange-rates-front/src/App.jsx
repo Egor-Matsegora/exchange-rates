@@ -1,9 +1,21 @@
+import { useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import Header from './components/Header';
 import { Routes } from './components/Routes';
+import { getCurrencyAsync } from 'store/actions';
 
 import './App.sass';
 
-const App = () => {
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyAsync }, dispatch)});
+
+const App = ({actions}) => {
+
+  const { getCurrencyAsync } = actions
+
+  useEffect(() => getCurrencyAsync(), [getCurrencyAsync]);
+
   return (
     <div className="app">
       <div className="app__header">
@@ -16,4 +28,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);
