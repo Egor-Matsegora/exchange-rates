@@ -32,10 +32,22 @@ export const getCurrencyAsync = () => (dispatch, getState) =>  {
       dispatch(calculateCurrency());
     })
     .catch(err => dispatch({
-      type: types.GET_CURRENCY_ERROR,
-      payload: 'ошибка загрузки данных'
+      type: types.GET_CURRENCY_ERROR
     }))
-}
+};
+
+export const getCurrencyRangeAsync = (currency) => (dispatch, getState) => {
+  dispatch({
+    type: types.GET_CURRENCY_RANGE
+  });
+
+  api.fetchCurrencyRange(currency)
+    .then(res => {
+      const currentCurrency = res.data
+      dispatch(getRangeCurrencySuccess(currentCurrency))
+    })
+    .catch(err => dispatch({type: types.GET_CURRENCY_ERROR}));
+};
 
 export const fillCurrencySuccess = (currency) => ({
   type: types.GET_CURRENCY_SUCCESS,
@@ -43,8 +55,13 @@ export const fillCurrencySuccess = (currency) => ({
 });
 
 export const fillCurrencyError = () => ({
-  type: types.GET_CURRENCY_ERROR,
+  type: types.GET_CURRENCY_ERROR
 });
+
+export const getRangeCurrencySuccess = (currentCurrency) => ({
+  type: types.GET_CURRENCY_RANGE_SUCCESS,
+  payload: currentCurrency
+})
 
 export const filterCurrency = (queryString) => {
   return {

@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { Currency } from 'components/Currency'
 
 import './CurrencyList.sass';
 
-const mapStateToPorps = (state) => ({
+const mapStateToProps = (state) => ({
   currency: state.currency.currency,
   currencyLoading: state.currency.currencyLoading,
   filteredCurency: state.currency.filteredCurency,
@@ -51,4 +49,4 @@ CurrencyList.defaultPros = {
   list: []
 }
 
-export default connect(mapStateToPorps)(CurrencyList);
+export default connect(mapStateToProps)(CurrencyList);
