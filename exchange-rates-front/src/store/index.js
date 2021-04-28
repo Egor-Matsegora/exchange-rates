@@ -18,7 +18,7 @@ const logger = createLogger({
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-const enhanced = devMode ? composeWithDevTools :  compose;
+const enhanced = devMode ? composeWithDevTools : compose;
 
 const middleware = [ thunk ];
 

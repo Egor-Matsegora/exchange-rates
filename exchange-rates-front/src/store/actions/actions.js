@@ -1,5 +1,6 @@
 import { types } from '../types';
 import { api } from '../../api';
+import { currentDateHelper } from 'helpers/currentDateHelper';
 
 
 export const getCurrencyAsync = () => (dispatch, getState) =>  {
@@ -7,10 +8,7 @@ export const getCurrencyAsync = () => (dispatch, getState) =>  {
     type: types.GET_CURRENCY
   });
 
-  const dateNow = new Date();
-  const monthString = (dateNow.getMonth() + 1).toString().length < 2 ? '0' + (dateNow.getMonth() + 1) : (dateNow.getMonth() + 1).toString();
-  const dayString = (dateNow.getDate()).toString().length < 2 ? '0' + dateNow.getDate() : dateNow.getDate().toString();
-  const dateString = `${dateNow.getFullYear()}-${monthString}-${dayString}`
+  const dateString = currentDateHelper();
 
   if (localStorage.getItem(dateString)) {
     dispatch(fillCurrencySuccess(JSON.parse(localStorage.getItem(dateString))));
