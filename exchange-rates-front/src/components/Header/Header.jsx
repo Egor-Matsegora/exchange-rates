@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators({ filter
 const Header = ({actions, currency, activeCurrencyList}) => {
   return (
   <header className="header">
-    <Link to='/' exact className="header__logo">
+    <Link to='/' className="header__logo">
       <Logo/>
     </Link>
     <div className="header__nav">

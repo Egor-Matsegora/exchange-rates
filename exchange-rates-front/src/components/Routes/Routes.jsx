@@ -13,7 +13,6 @@ export const Routes = () => {
       <Route
         path="/:charcode"
         component={ CurrencyPage }
-        exact
       />
     </Switch>
   )

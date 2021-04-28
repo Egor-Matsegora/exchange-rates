@@ -6,26 +6,32 @@ export const getCurrencyAsync = () => (dispatch, getState) =>  {
   dispatch({
     type: types.GET_CURRENCY
   });
+
+  const dateNow = new Date();
+  const monthString = (dateNow.getMonth() + 1).toString().length < 2 ? '0' + (dateNow.getMonth() + 1) : (dateNow.getMonth() + 1).toString();
+  const dayString = (dateNow.getDate()).toString().length < 2 ? '0' + dateNow.getDate() : dateNow.getDate().toString();
+  const dateString = `${dateNow.getFullYear()}-${monthString}-${dayString}`
+
+  if (localStorage.getItem(dateString)) {
+    dispatch(fillCurrencySuccess(JSON.parse(localStorage.getItem(dateString))));
+    dispatch(calculateCurrency());
+    return;
+  }
+
   api.fetchCurrency()
     .then(res => {
-      // if (`${res.status}`.startsWith('2') || `${res.status}`.startsWith('3')) {
-        const currency = [];
+      const currency = [];
 
-        for (const key in res.Valute) {
-          if (res.Valute[key]) {
-            const valute = res.Valute[key];
-            currency.push(valute);
-          }
-        };
+      for (const key in res.data.Valute) {
+        if (res.data.Valute[key]) {
+          const valute = res.data.Valute[key];
+          currency.push(valute);
+        }
+      };
 
-        dispatch(fillCurrencySuccess(currency));
-        dispatch(calculateCurrency());
-      // } else {
-      //   dispatch({
-      //     type: types.GET_CURRENCY_ERROR,
-      //     payload: 'ошибка загрузки данных'
-      //   })
-      // }
+      localStorage.setItem(dateString, JSON.stringify(currency));
+      dispatch(fillCurrencySuccess(currency));
+      dispatch(calculateCurrency());
     })
     .catch(err => dispatch({
       type: types.GET_CURRENCY_ERROR,
