@@ -1,7 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 
 import Header from './components/Header';
-import { Home } from './pages/Home';
+import { HomePage } from './pages/HomePage';
 import { CurrencyPage } from './pages/CurrencyPage';
 
 import './App.sass';
@@ -17,7 +17,7 @@ const App = () => {
 
           <Route
             path="/"
-            component={ Home }
+            component={ HomePage }
             exact
           />
           <Route

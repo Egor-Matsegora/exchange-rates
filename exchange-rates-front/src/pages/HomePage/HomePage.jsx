@@ -1,9 +1,9 @@
 import Calculator from '../../components/Calculator';
 import CurrencyList from '../../components/CurrencyList';
 
-import './Home.sass';
+import './HomePage.sass';
 
-export const Home = () => {
+export const HomePage = () => {
   return (
     <div className="home">
       <div className="home__calculator">
