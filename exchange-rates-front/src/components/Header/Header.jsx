@@ -1,7 +1,7 @@
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { Logo } from "shared/Logo/Logo";
 import { Options } from "shared/Options";
@@ -17,18 +17,20 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators({ filterCurrency, abortFiltration, setActiveCurrencyList }, dispatch)});
 
 const Header = ({actions, currency, activeCurrencyList}) => {
+  const url = useLocation().pathname;
+
   return (
   <header className="header">
     <Link to='/' className="header__logo">
       <Logo/>
     </Link>
     <div className="header__nav">
-      <div className="header__nav-item">
+      {url === '/' && (<div className="header__nav-item">
         <Filter
           filterCurrency={ actions.filterCurrency }
           abortFiltration={ actions.abortFiltration }
         />
-      </div>
+      </div>)}
       <div className="header__nav-item">
         <Options
           currency={ currency }
