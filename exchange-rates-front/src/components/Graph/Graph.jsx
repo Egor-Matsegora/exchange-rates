@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 
 import { Bar } from 'react-chartjs-2';
-import { getCurrencyRangeAsync } from 'pages/CurrencyPage/store/actions';
+import { getCurrencyRangeAsync, getRangeCurrencySuccess } from 'pages/CurrencyPage/store/actions';
 
 import './Graph.sass';
 import { connect } from 'react-redux';
@@ -12,16 +12,17 @@ const mapStateToProps = state => ({
   currencyRange: state.currencyRange.currencyRange,
 })
 
-const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyRangeAsync }, dispatch)});
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyRangeAsync, getRangeCurrencySuccess }, dispatch)});
 
 const GraphComponent = ({charCode, loading, currencyRange, actions}) => {
   const [ data, setData ] = useState(null);
-  const { getCurrencyRangeAsync } = actions
+  const { getCurrencyRangeAsync, getRangeCurrencySuccess } = actions
 
   useEffect(() => {
     if(!charCode) return;
     getCurrencyRangeAsync(charCode);
-  }, [getCurrencyRangeAsync, charCode])
+    return () => getRangeCurrencySuccess(null);
+  }, [getCurrencyRangeAsync, getRangeCurrencySuccess, charCode])
 
   useEffect(() => {
     if(!currencyRange) return;
@@ -37,6 +38,7 @@ const GraphComponent = ({charCode, loading, currencyRange, actions}) => {
       ]
     };
     setData(resultData);
+    return () => setData(null);
   }, [currencyRange, charCode])
 
   const options = {
