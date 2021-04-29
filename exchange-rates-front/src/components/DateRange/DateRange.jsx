@@ -7,6 +7,8 @@ import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import { setDateRange } from "pages/CurrencyPage/store/actions";
 import { formatDate } from 'helpers/currentDateHelper';
 
+import './DateRange.sass'
+
 const mapStateToProps = (state) => ({
   startDate: state.currencyRange.startDate,
   endDate: state.currencyRange.endDate,
@@ -42,17 +44,18 @@ const DateRangeComponent = ({ startDate, endDate, setDateRange }) => {
 
   return (
     <div className="date-range">
-      <h3>
+      <h3 className="date-range__title">
         Выбран курс за период
       </h3>
-      <DateRangePicker
-        onChange={handleRangeChange}
-        value={localeDateRange}
-        maxDate={maxDate}
-        minDate={minDate}
-        clearIcon={null}
-        // onClick={e => console.log(e)}
-      />
+      <div className="date-range__calendar">
+        <DateRangePicker
+          onChange={handleRangeChange}
+          value={localeDateRange}
+          maxDate={maxDate}
+          minDate={minDate}
+          clearIcon={null}
+        />
+      </div>
     </div>
   )
 };

@@ -1,0 +1,38 @@
+@import 'assets/styles/common'
+
+.cur-page__header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 30px
+
+.cur-page__cur-name
+  margin: 0
+  font-size: 28px
+
+.cur-page__cur-rate
+  display: inline-block
+  padding-left: 5px
+  font-size: 18px
+
+  &::after
+    content: ''
+    display: inline-block
+    margin-left: 5px
+    width: 0
+    height: 0
+    border-style: solid
+
+.cur-page__cur-rate--positive
+  color: $text-color-success
+
+  &::after
+    border-width: 0 6px 12px 6px
+    border-color: transparent transparent $text-color-success  transparent
+
+.cur-page__cur-rate--negative
+  color: $text-color-error
+
+  &::after
+    border-width: 12px 6px 0 6px
+    border-color: $text-color-error transparent transparent transparent

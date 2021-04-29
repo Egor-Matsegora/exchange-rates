@@ -52,14 +52,14 @@ const GraphComponent = ({charCode, loading, currencyRange, startDate, endDate, a
   };
 
   return (
-    <>
-      <h3>График изменения Курса</h3>
-      <div className="cur-page__cur-graph">
+    <div className="graph">
+      <h3 className="graph__title">График изменения курса</h3>
+      <div className="graph__content">
         {
           loading || !currencyRange  ? '...loading' : <Bar data={ data } options={ options } />
         }
       </div>
-    </>
+    </div>
   );
 }
 

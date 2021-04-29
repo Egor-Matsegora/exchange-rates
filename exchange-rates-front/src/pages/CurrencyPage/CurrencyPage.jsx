@@ -27,21 +27,18 @@ const CurrencyPageComponent = ({ match, currency, loading }) => {
   return (
     <div className="cur-page">
       <div className="cur-page__header">
-
-        <div className="cur-page__text">
-          <h1 className="cur-page__cur-name">
-            { currentCurrency.Name }
-          </h1>
-          <div className="cur-apge__cur-code">
-            { currentCurrency.CharCode }
-          </div>
+        <h1 className="cur-page__cur-name">
+          { currentCurrency.Name }
+        </h1>
+        <div className="cur-apge__cur-code">
+          1 { currentCurrency.CharCode } =
+          <span className={`cur-page__cur-rate ${currentCurrency.Value > currentCurrency.Previous ? 'cur-page__cur-rate--positive' : 'cur-page__cur-rate--negative'}`}>
+            { currentCurrency.Value } RUB
+          </span>
         </div>
-        <div className={`cur-page__cur-rate ${currentCurrency.Value > currentCurrency.Previous ? 'cur-page__cur-rate--positive' : 'cur-page__cur-rate--negative'}`}>
-          { currentCurrency.Value }
-        </div>
-        <div className="cur-page__calendar">
-          <DateRange/>
-        </div>
+      </div>
+      <div className="cur-page__calendar">
+        <DateRange/>
       </div>
       <Graph charCode={ charcode }/>
     </div>
