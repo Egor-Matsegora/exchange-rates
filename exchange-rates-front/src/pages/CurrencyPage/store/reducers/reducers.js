@@ -1,8 +1,13 @@
 import { types } from '../types';
+import { rangeDateHelper } from 'helpers/currentDateHelper';
+
+const [dafaultStartDate, defaultEndDate] = rangeDateHelper();
 
 const initialState = {
   currencyRange: null,
-  currencRangeyLoading: false
+  currencRangeyLoading: false,
+  startDate: dafaultStartDate,
+  endDate: defaultEndDate,
 }
 
 export const currencyRangeReducer = (state = initialState, action) => {
@@ -21,7 +26,14 @@ export const currencyRangeReducer = (state = initialState, action) => {
         currencyRangeLoading: false
       };
 
-      default:
-        return state;
+    case types.SET_DATE_RANGE:
+      return {
+        ...state,
+        startDate: action.payload.startDate,
+        endDate: action.payload.endDate
+      }
+
+    default:
+      return state;
   }
 }

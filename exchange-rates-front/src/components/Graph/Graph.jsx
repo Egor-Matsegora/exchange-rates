@@ -10,19 +10,21 @@ import { connect } from 'react-redux';
 const mapStateToProps = state => ({
   loading: state.currencyRange.currencyRangeLoading,
   currencyRange: state.currencyRange.currencyRange,
+  startDate: state.currencyRange.startDate,
+  endDate: state.currencyRange.endDate,
 })
 
 const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyRangeAsync, getRangeCurrencySuccess }, dispatch)});
 
-const GraphComponent = ({charCode, loading, currencyRange, actions}) => {
+const GraphComponent = ({charCode, loading, currencyRange, startDate, endDate, actions}) => {
   const [ data, setData ] = useState(null);
   const { getCurrencyRangeAsync, getRangeCurrencySuccess } = actions
 
   useEffect(() => {
     if(!charCode) return;
-    getCurrencyRangeAsync(charCode);
+    getCurrencyRangeAsync(charCode, startDate, endDate);
     return () => getRangeCurrencySuccess(null);
-  }, [getCurrencyRangeAsync, getRangeCurrencySuccess, charCode])
+  }, [getCurrencyRangeAsync, getRangeCurrencySuccess, charCode, startDate, endDate])
 
   useEffect(() => {
     if(!currencyRange) return;
@@ -43,19 +45,15 @@ const GraphComponent = ({charCode, loading, currencyRange, actions}) => {
 
   const options = {
     scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
+      y: {
+          beginAtZero: false,
+      },
     },
   };
 
   return (
     <>
-      <h2>График изменения Курса за последние 8 дней</h2>
+      <h3>График изменения Курса</h3>
       <div className="cur-page__cur-graph">
         {
           loading || !currencyRange  ? '...loading' : <Bar data={ data } options={ options } />

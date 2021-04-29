@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Graph } from 'components/Graph';
+import { DateRange } from 'components/DateRange';
 import './CurrencyPage.sass';
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
   loading: state.currency.currencyLoading,
-  currentCurrencyRage: state.currency.currentCurrency
+  currentCurrencyRage: state.currency.currentCurrency,
 })
 
 const CurrencyPageComponent = ({ match, currency, loading }) => {
@@ -37,6 +38,9 @@ const CurrencyPageComponent = ({ match, currency, loading }) => {
         </div>
         <div className={`cur-page__cur-rate ${currentCurrency.Value > currentCurrency.Previous ? 'cur-page__cur-rate--positive' : 'cur-page__cur-rate--negative'}`}>
           { currentCurrency.Value }
+        </div>
+        <div className="cur-page__calendar">
+          <DateRange/>
         </div>
       </div>
       <Graph charCode={ charcode }/>

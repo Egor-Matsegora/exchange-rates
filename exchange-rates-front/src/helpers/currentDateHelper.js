@@ -12,3 +12,5 @@ export const arrayDateHelper = () => {
   }
   return dateArray;
 }
+
+export const formatDate = (date = new Date(), format = 'DD MM YYY') => moment(date).format(format);

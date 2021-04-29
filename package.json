@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@wojtekmaj/react-daterange-picker": "^3.1.0",
+    "react-date-range-calendar": "^0.1.14"
+  }
+}
