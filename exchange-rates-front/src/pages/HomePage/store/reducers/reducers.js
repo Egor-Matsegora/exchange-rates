@@ -8,8 +8,7 @@ const initialState = {
   calculatedCurrency: null,
   baseCurrency: 'USD',
   calculatedCurrencyValue: null,
-  activeCurrencyList: ['USD'],
-  currentCurrency: null,
+  activeCurrencyList: ['USD']
 }
 
 export const currencyReducer = (state = initialState, action) => {
@@ -33,19 +32,6 @@ export const currencyReducer = (state = initialState, action) => {
         ...state,
         currencyLoading: false
       };
-
-    case types.GET_CURRENCY_RANGE:
-      return {
-        ...state,
-        currencyLoading: true
-      }
-
-    case types.GET_CURRENCY_RANGE_SUCCESS:
-      return {
-        ...state,
-        currentCurrency: action.payload,
-        currencyLoading: false
-      }
 
     case types.FILTER_CURRENCY:
       const filterResult = state.currency.filter(cur =>

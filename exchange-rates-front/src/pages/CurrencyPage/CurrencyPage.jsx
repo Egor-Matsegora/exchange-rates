@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { getCurrencyRangeAsync } from 'store/actions';
+
 import { Graph } from 'components/Graph';
 import './CurrencyPage.sass';
-import { bindActionCreators } from 'redux';
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
   loading: state.currency.currencyLoading,
   currentCurrencyRage: state.currency.currentCurrency
 })
-const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyRangeAsync }, dispatch)});
 
-const CurrencyPageComponent = ({ match, currency, loading, actions, currentCurrencyRage }) => {
-  const {getCurrencyRangeAsync} = actions
+const CurrencyPageComponent = ({ match, currency, loading }) => {
   const { charcode } = match.params;
   const [ currentCurrency, setCurrentCurrency ] = useState(null);
-
-  useEffect(() => getCurrencyRangeAsync(charcode), [getCurrencyRangeAsync])
 
   useEffect(() => {
     const cur = currency.find(cur => cur.CharCode === charcode);
@@ -44,9 +39,9 @@ const CurrencyPageComponent = ({ match, currency, loading, actions, currentCurre
           { currentCurrency.Value }
         </div>
       </div>
-      <Graph currentCurrency={ currentCurrencyRage } charCode={ charcode }/>
+      <Graph charCode={ charcode }/>
     </div>
   );
 }
 
-export const CurrencyPage = connect(mapStateToProps, mapDispatchToProps)(CurrencyPageComponent);
+export const CurrencyPage = connect(mapStateToProps)(CurrencyPageComponent);

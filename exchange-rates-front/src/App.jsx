@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Header from './components/Header';
 import { Routes } from './components/Routes';
-import { getCurrencyAsync } from 'store/actions';
+import { getCurrencyAsync } from 'pages/HomePage/store/actions';
 
 import './App.sass';
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Logo } from "shared/Logo/Logo";
 import { Options } from "shared/Options";
 import { Filter } from "shared/Filter";
-import { filterCurrency, abortFiltration, setActiveCurrencyList } from "store/actions";
+import { filterCurrency, abortFiltration, setActiveCurrencyList } from "pages/HomePage/store/actions";
 
 import './Header.sass';
 

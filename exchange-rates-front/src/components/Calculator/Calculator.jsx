@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setBaseCurrency, calculateCurrency } from "store/actions";
+import { setBaseCurrency, calculateCurrency } from "pages/HomePage/store/actions";
 import { BaseCurrencySelect } from "shared/BaseCurrencySelect";
 import './Calculator.sass';
 

@@ -1,26 +1,43 @@
 import { useEffect, useState } from 'react';
+import { bindActionCreators } from 'redux';
+
 import { Bar } from 'react-chartjs-2';
-import { arrayDateHelper } from 'helpers/currentDateHelper';
+import { getCurrencyRangeAsync } from 'pages/CurrencyPage/store/actions';
 
 import './Graph.sass';
+import { connect } from 'react-redux';
 
-export const Graph = ({currentCurrency, charCode}) => {
+const mapStateToProps = state => ({
+  loading: state.currencyRange.currencyRangeLoading,
+  currencyRange: state.currencyRange.currencyRange,
+})
+
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ getCurrencyRangeAsync }, dispatch)});
+
+const GraphComponent = ({charCode, loading, currencyRange, actions}) => {
   const [ data, setData ] = useState(null);
+  const { getCurrencyRangeAsync } = actions
 
   useEffect(() => {
-    console.log(currentCurrency);
+    if(!charCode) return;
+    getCurrencyRangeAsync(charCode);
+  }, [getCurrencyRangeAsync, charCode])
+
+  useEffect(() => {
+    if(!currencyRange) return;
+
     const resultData = {
-      labels: arrayDateHelper(),
+      labels: Object.keys(currencyRange),
       datasets: [
         {
           label: charCode,
-          data: [12, 19, 3, 5, 2, 3, 7, 6],
+          data: Object.values(currencyRange),
           backgroundColor: ['rgba(75, 192, 192, 1)']
         }
       ]
     };
     setData(resultData);
-  }, [currentCurrency, charCode])
+  }, [currencyRange, charCode])
 
   const options = {
     scales: {
@@ -38,8 +55,12 @@ export const Graph = ({currentCurrency, charCode}) => {
     <>
       <h2>График изменения Курса за последние 8 дней</h2>
       <div className="cur-page__cur-graph">
-        <Bar data={ data } options={ options } />
+        {
+          loading || !currencyRange  ? '...loading' : <Bar data={ data } options={ options } />
+        }
       </div>
     </>
   );
 }
+
+export const Graph = connect(mapStateToProps, mapDispatchToProps)(GraphComponent)
