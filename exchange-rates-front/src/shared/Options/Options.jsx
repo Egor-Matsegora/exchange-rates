@@ -3,11 +3,12 @@ import { useState } from 'react';
 
 export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList }) => {
   const [openStatus, setOpenStatus] = useState(false);
-  const [activeCurrencyNames, setactiveCurrencyNames] = useState(activeCurrencyList);
+  const [activeCurrencyNames, setactiveCurrencyNames] = useState([]);
   const [filterValue, setFilterValue] = useState('');
   const [filteredCurrency, setFilteredCurrency] = useState([]);
 
   const handleOpenStatus = () => {
+    setactiveCurrencyNames(activeCurrencyList);
     setOpenStatus(openStatus ? false : true);
     resetFilter();
   }
@@ -46,6 +47,7 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
     }
     result.length > 3 && (result.length = 3);
     !result.length && result.push('USD');
+    console.log(result);
     setactiveCurrencyNames(result);
     setActiveCurrencyList(result);
   }
@@ -75,7 +77,11 @@ export const Options = ({ currency, activeCurrencyList, setActiveCurrencyList })
       </div>
       <div className={`options__dropdown ${openStatus ? 'options__dropdown--open' : 'options__dropdown--closed'}`}>
         <div className="options__column">
-          <div className="options__title">Главные валюты</div>
+          <div className="options__title">
+            Выберите валюты которые будут находиться в начале списка
+            <br/>
+            <small>(максимум 3 наименования)</small>
+          </div>
           <div className="options__filter">
             <input
               type="text"

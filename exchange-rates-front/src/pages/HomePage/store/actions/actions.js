@@ -8,6 +8,10 @@ export const getCurrencyAsync = () => (dispatch, getState) =>  {
     type: types.GET_CURRENCY
   });
 
+  if(localStorage.getItem('options')) {
+    dispatch(setActiveCurrencyList(JSON.parse(localStorage.getItem('options'))));
+  }
+
   const dateString = currentDateHelper();
 
   if (localStorage.getItem(dateString)) {
@@ -65,6 +69,12 @@ export const calculateCurrency = (currencyValue = 1 ) => ({
   type: types.CALCULATE_CURRENCY,
   payload: currencyValue
 });
+
+export const setActiveCurrencyListWithStorage = (activeCurrencyList = ['USD']) => (dispatch, getState) => {
+  dispatch(setActiveCurrencyList(activeCurrencyList));
+
+  localStorage.setItem('options', JSON.stringify(activeCurrencyList));
+}
 
 export const setActiveCurrencyList = (activeCurrencyList = ['USD']) => ({
   type: types.SET_ACTIVE_CURRENCY_LIST,
