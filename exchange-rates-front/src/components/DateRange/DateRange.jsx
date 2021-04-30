@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ setDateRange }, di
 
 const DateRangeComponent = ({ startDate, endDate, setDateRange }) => {
   const [localeDateRange, setLocaleDateRange] = useState([new Date(startDate), new Date(endDate)]);
-  const [maxDate, setMaxDate] = useState(new Date());
-  const [minDate, setMinDate] = useState(new Date(moment().subtract(365, 'days')));
+  const maxDate = new Date();
+  const minDate = new Date(moment().subtract(365, 'days'));
 
   useEffect(() => {
     const [start, end] = localeDateRange || [new Date(startDate), new Date(endDate)];

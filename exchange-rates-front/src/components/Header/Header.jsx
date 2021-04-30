@@ -28,7 +28,7 @@ const Header = ({actions, currency, activeCurrencyList}) => {
   return (
     <header className="header">
       {
-        url === '/' 
+        url === '/'
           ? (<span className="header__logo">
             <Logo/>
           </span>)
