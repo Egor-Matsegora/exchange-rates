@@ -26,7 +26,7 @@ const CurrencyPageComponent = ({ match, currency, loading }) => {
 
   return (
     <div className="cur-page">
-      <div className="cur-page__header">
+      <div className="cur-page__header cur-page__block">
         <h1 className="cur-page__cur-name">
           { currentCurrency.Name }
         </h1>
@@ -37,10 +37,12 @@ const CurrencyPageComponent = ({ match, currency, loading }) => {
           </span>
         </div>
       </div>
-      <div className="cur-page__calendar">
+      <div className="cur-page__calendar cur-page__block">
         <DateRange/>
       </div>
-      <Graph charCode={ charcode }/>
+      <div className="cur-page__block">
+        <Graph charCode={ charcode }/>
+      </div>
     </div>
   );
 }

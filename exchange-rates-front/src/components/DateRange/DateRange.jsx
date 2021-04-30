@@ -55,6 +55,9 @@ const DateRangeComponent = ({ startDate, endDate, setDateRange }) => {
           minDate={minDate}
           clearIcon={null}
         />
+        <span className="date-range__info">
+          * максимальный период 8 дней
+        </span>
       </div>
     </div>
   )

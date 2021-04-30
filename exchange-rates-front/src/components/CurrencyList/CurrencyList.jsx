@@ -27,8 +27,14 @@ export const CurrencyList = ({
   const defaultTemplate = currencyArray.length ? [ ...currencyArray ]
     .sort(item => activeCurrencyList.includes(item.CharCode) ? -1 : 1)
     .map(item => (
-      <div className="list__item" key={ item.ID }>
-        <Currency currency={ item } isPrimary={ activeCurrencyList.includes(item.CharCode) }/>
+      <div
+        className={`list__item ${activeCurrencyList.includes(item.CharCode) ? 'list__item--primary' : ''}`}
+        key={ item.ID }
+      >
+        <Currency
+          currency={ item }
+          isPrimary={ activeCurrencyList.includes(item.CharCode) }
+        />
       </div>
   )) : '...';
 

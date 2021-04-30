@@ -21,9 +21,15 @@ const Header = ({actions, currency, activeCurrencyList}) => {
 
   return (
   <header className="header">
-    <Link to='/' className="header__logo">
-      <Logo/>
-    </Link>
+    {
+      url === '/' 
+        ? (<span className="header__logo">
+          <Logo/>
+        </span>)
+        : (<Link to='/' className="header__logo">
+            <Logo/>
+          </Link>)
+    }
     <div className="header__nav">
       {url === '/' && (<div className="header__nav-item">
         <Filter
