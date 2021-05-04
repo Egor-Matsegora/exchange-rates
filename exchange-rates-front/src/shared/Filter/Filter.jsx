@@ -1,20 +1,22 @@
 import { useRef, useState } from 'react';
 import './Filter.sass';
 
-export const Filter = ({filterCurrency, abortFiltration}) => {
-  const [queryString, setQueryString] = useState('');
+export const Filter = ({filterCurrency, abortFiltration, defaultFilterValue}) => {
+  const [queryString, setQueryString] = useState(defaultFilterValue);
   const [inputOpenState, setInputOpenState] = useState(false);
 
   const inputEl = useRef(null);
 
   const handleInputChange = (event) => {
     setQueryString(event.target.value);
-    event.target.value ? filterCurrency(queryString) : abortFiltration()
+    event.target.value ? filterCurrency(event.target.value) : abortFiltration()
   }
+
   const handleOpenInput = () => {
     setInputOpenState(true);
     inputEl.current.focus();
   }
+
   const handleCloseInput = () => {
     setQueryString('');
     abortFiltration();

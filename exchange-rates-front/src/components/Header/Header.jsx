@@ -1,18 +1,19 @@
 
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { Logo } from "shared/Logo/Logo";
 import { Options } from "shared/Options";
 import { Filter } from "shared/Filter";
-import { 
+import {
   filterCurrency,
   abortFiltration,
   setActiveCurrencyListWithStorage
 } from "pages/HomePage/store/actions";
 
 import './Header.sass';
+import { useEffect, useState } from "react";
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
@@ -24,6 +25,24 @@ const mapDispatchToProps = (dispatch) => (
 
 const Header = ({actions, currency, activeCurrencyList}) => {
   const url = useLocation().pathname;
+  const history = useHistory();
+
+  const [filterString, setFilterString] = useState(history.location.search.split('=')[1] || '');
+
+  useEffect(() => {
+    if (filterString) {
+      actions.filterCurrency(filterString);
+      history.replace({
+        path: '/',
+        search: `?filter=${filterString}`
+      })
+    } else {
+      actions.abortFiltration();
+      history.replace({
+        path: '/'
+      })
+    }
+  }, [filterString, history, actions])
 
   return (
     <header className="header">
@@ -39,8 +58,12 @@ const Header = ({actions, currency, activeCurrencyList}) => {
       <div className="header__nav">
         {url === '/' && (<div className="header__nav-item">
           <Filter
-            filterCurrency={ actions.filterCurrency }
-            abortFiltration={ actions.abortFiltration }
+            defaultFilterValue={ filterString }
+            filterCurrency={ e => {
+              console.log(e);
+              setFilterString(e);
+            } }
+            abortFiltration={ () => setFilterString('') }
           />
         </div>)}
         <div className="header__nav-item">
