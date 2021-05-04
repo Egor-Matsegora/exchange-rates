@@ -3,17 +3,16 @@ import './Filter.sass';
 
 export const Filter = ({filterCurrency, abortFiltration, defaultFilterValue}) => {
   const [queryString, setQueryString] = useState(defaultFilterValue);
-  const [inputOpenState, setInputOpenState] = useState(false);
+  const [inputOpenState, setInputOpenState] = useState(!!defaultFilterValue);
 
   const inputEl = useRef(null);
 
-  const handleInputChange = (event) => {
-    setQueryString(event.target.value);
-    event.target.value ? filterCurrency(event.target.value) : abortFiltration()
-  }
+  useEffect(() => {
+    queryString ? filterCurrency(queryString) : abortFiltration();
+  }, [queryString, filterCurrency, abortFiltration])
 
   useEffect(() => {
-    if(inputOpenState) {
+    if( inputOpenState ) {
       inputEl.current.focus();
     } else {
       setQueryString('');
@@ -31,7 +30,7 @@ export const Filter = ({filterCurrency, abortFiltration, defaultFilterValue}) =>
             className="filter__input"
             value={ queryString }
             ref={ inputEl }
-            onChange={ handleInputChange }
+            onChange={ (event) => setQueryString(event.target.value) }
           />
           <button
             className="filter__reset filter__button"

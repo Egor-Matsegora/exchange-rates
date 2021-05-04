@@ -28,17 +28,18 @@ const Header = ({actions, currency, activeCurrencyList}) => {
   const history = useHistory();
 
   const [filterString, setFilterString] = useState(history.location.search.split('=')[1] || '');
+  console.log(filterString);
 
   useEffect(() => {
     if (filterString) {
       actions.filterCurrency(filterString);
-      history.replace({
+      history.push({
         path: '/',
         search: `?filter=${filterString}`
       })
     } else {
       actions.abortFiltration();
-      history.replace({
+      history.push({
         path: '/'
       })
     }
@@ -59,10 +60,7 @@ const Header = ({actions, currency, activeCurrencyList}) => {
         {url === '/' && (<div className="header__nav-item">
           <Filter
             defaultFilterValue={ filterString }
-            filterCurrency={ e => {
-              console.log(e);
-              setFilterString(e);
-            } }
+            filterCurrency={ setFilterString }
             abortFiltration={ () => setFilterString('') }
           />
         </div>)}
