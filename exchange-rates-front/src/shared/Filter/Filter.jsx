@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Filter.sass';
 
 export const Filter = ({filterCurrency, abortFiltration, defaultFilterValue}) => {
@@ -12,17 +12,15 @@ export const Filter = ({filterCurrency, abortFiltration, defaultFilterValue}) =>
     event.target.value ? filterCurrency(event.target.value) : abortFiltration()
   }
 
-  const handleOpenInput = () => {
-    setInputOpenState(true);
-    inputEl.current.focus();
-  }
-
-  const handleCloseInput = () => {
-    setQueryString('');
-    abortFiltration();
-    inputEl.current.blur();
-    setInputOpenState(false);
-  }
+  useEffect(() => {
+    if(inputOpenState) {
+      inputEl.current.focus();
+    } else {
+      setQueryString('');
+      abortFiltration();
+      inputEl.current.blur();
+    }
+  }, [inputOpenState, setQueryString, abortFiltration, inputEl])
 
   return (
     <>
@@ -37,12 +35,12 @@ export const Filter = ({filterCurrency, abortFiltration, defaultFilterValue}) =>
           />
           <button
             className="filter__reset filter__button"
-            onClick={ handleCloseInput }
+            onClick={ () => setInputOpenState(false) }
           ></button>
         </div>
         <button
           className="filter__open filter__button"
-          onClick={ handleOpenInput }
+          onClick={ () => setInputOpenState(true) }
         ></button>
       </div>
     </>
