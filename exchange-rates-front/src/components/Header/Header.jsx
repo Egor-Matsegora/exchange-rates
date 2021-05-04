@@ -28,7 +28,6 @@ const Header = ({actions, currency, activeCurrencyList}) => {
   const history = useHistory();
 
   const [filterString, setFilterString] = useState(history.location.search.split('=')[1] || '');
-  console.log(filterString);
 
   useEffect(() => {
     if (filterString) {
