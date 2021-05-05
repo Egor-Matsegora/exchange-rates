@@ -70,6 +70,11 @@ export const calculateCurrency = (currencyValue = 1 ) => ({
   payload: currencyValue
 });
 
+export const calculateCurrencyReverse = (currencyValue = 1 ) => ({
+  type: types.CALCULATE_CURRENCY_REVERSE,
+  payload: currencyValue
+});
+
 export const setActiveCurrencyListWithStorage = (activeCurrencyList = ['USD']) => (dispatch, getState) => {
   dispatch(setActiveCurrencyList(activeCurrencyList));
 

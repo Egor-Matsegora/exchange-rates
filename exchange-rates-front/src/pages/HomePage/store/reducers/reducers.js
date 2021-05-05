@@ -59,11 +59,21 @@ export const currencyReducer = (state = initialState, action) => {
       };
 
     case types.CALCULATE_CURRENCY:
-      const {Nominal, Value} = state.currency.find(cur => cur.CharCode === state.baseCurrency);
+      const { Nominal, Value } = state.currency.find(cur => cur.CharCode === state.baseCurrency);
 
       return {
         ...state,
         calculatedCurrencyValue: Value / Nominal * action.payload
+      };
+
+    case types.CALCULATE_CURRENCY_REVERSE:
+      {
+        const { Nominal, Value } = state.currency.find(cur => cur.CharCode === state.baseCurrency);
+
+        return {
+          ...state,
+          calculatedCurrencyValue: action.payload / Value / Nominal
+        }
       };
 
     case types.SET_ACTIVE_CURRENCY_LIST:

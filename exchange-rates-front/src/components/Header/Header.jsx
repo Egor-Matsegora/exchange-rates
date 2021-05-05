@@ -56,13 +56,15 @@ const Header = ({actions, currency, activeCurrencyList}) => {
             </Link>)
       }
       <div className="header__nav">
-        {url === '/' && (<div className="header__nav-item">
-          <Filter
-            defaultFilterValue={ filterString }
-            filterCurrency={ setFilterString }
-            abortFiltration={ () => setFilterString('') }
-          />
-        </div>)}
+        {url === '/' && (
+          <div className="header__nav-item">
+            <Filter
+              defaultFilterValue={ filterString }
+              filterCurrency={ setFilterString }
+              abortFiltration={ () => setFilterString('') }
+            />
+          </div>
+        )}
         <div className="header__nav-item">
           <Options
             currency={ currency }

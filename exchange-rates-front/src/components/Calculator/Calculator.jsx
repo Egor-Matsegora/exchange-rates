@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setBaseCurrency, calculateCurrency } from "pages/HomePage/store/actions";
+import { setBaseCurrency, calculateCurrency, calculateCurrencyReverse } from "pages/HomePage/store/actions";
 import { BaseCurrencySelect } from "shared/BaseCurrencySelect";
 import './Calculator.sass';
 
@@ -12,15 +12,15 @@ const mapStateToProps = (state) => ({
   loading: state.currency.currencyLoading
 })
 
-const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ setBaseCurrency, calculateCurrency }, dispatch)});
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ setBaseCurrency, calculateCurrency, calculateCurrencyReverse }, dispatch)});
 
 const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, actions }) => {
-  const [ currentValue, setCurrentValue ] = useState(1)
+  const [ currentValue, setCurrentValue ] = useState(1);
+  const [ reverse, setReverse ] = useState(false);
 
-  const calculate = (e) => {
-    setCurrentValue(+e.target.value);
-    actions.calculateCurrency(+e.target.value);
-  }
+  useEffect(() => {
+    reverse ? actions.calculateCurrencyReverse(currentValue) : actions.calculateCurrency(currentValue)
+  }, [actions, currentValue, reverse]);
 
   const setBase = (e) => {
     actions.setBaseCurrency(e.value);
@@ -33,12 +33,15 @@ const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, acti
         className="calculator__input"
         type="text"
         value={ currentValue }
-        onChange={ calculate }
+        onChange={ (e) => setCurrentValue(+e.target.value) }
       />
       <span className="calculator__text">
-        {/* { baseCurrencyName } = {  Math.round( calculatedValue * 100 ) / 100  } RUB */}
-        { baseCurrencyName } = {  Math.round( calculatedValue * 100 ) / 100  } RUB
+        { reverse ? 'RUB' : baseCurrencyName } = { Math.round( calculatedValue * 100 ) / 100  } { reverse ? baseCurrencyName : 'RUB' }
       </span>
+      <button
+        className="calculator__reverse"
+        onClick={ () => setReverse(!reverse) }
+      ></button>
       <div className="calculator__select">
         <BaseCurrencySelect
           baseCurrency={ baseCurrencyName }
