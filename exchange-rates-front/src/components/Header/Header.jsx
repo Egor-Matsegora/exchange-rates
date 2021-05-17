@@ -30,6 +30,7 @@ const Header = ({actions, currency, activeCurrencyList}) => {
   const [filterString, setFilterString] = useState(history.location.search.split('=')[1] || '');
 
   useEffect(() => {
+    if(!currency.length) return;
     if (filterString) {
       actions.filterCurrency(filterString);
       history.push({

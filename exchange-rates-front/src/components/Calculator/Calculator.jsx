@@ -19,6 +19,7 @@ const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, acti
   const [ reverse, setReverse ] = useState(false);
 
   useEffect(() => {
+    if(!currency.length) return;
     reverse ? actions.calculateCurrencyReverse(currentValue) : actions.calculateCurrency(currentValue)
   }, [actions, currentValue, reverse]);
 
