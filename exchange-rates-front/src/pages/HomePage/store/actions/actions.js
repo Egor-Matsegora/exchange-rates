@@ -3,42 +3,9 @@ import { api } from 'api';
 import { currentDateHelper } from 'helpers/currentDateHelper';
 
 
-export const getCurrencyAsync = () => (dispatch, getState) =>  {
-  dispatch({
-    type: types.GET_CURRENCY
-  });
-
-  if(localStorage.getItem('options')) {
-    dispatch(setActiveCurrencyList(JSON.parse(localStorage.getItem('options'))));
-  }
-
-  const dateString = currentDateHelper();
-
-  if (localStorage.getItem(dateString)) {
-    dispatch(fillCurrencySuccess(JSON.parse(localStorage.getItem(dateString))));
-    dispatch(calculateCurrency());
-    return;
-  }
-
-  api.fetchCurrency()
-    .then(res => {
-      const currency = [];
-
-      for (const key in res.data.Valute) {
-        if (res.data.Valute[key]) {
-          const valute = res.data.Valute[key];
-          currency.push(valute);
-        }
-      };
-
-      localStorage.setItem(dateString, JSON.stringify(currency));
-      dispatch(fillCurrencySuccess(currency));
-      dispatch(calculateCurrency());
-    })
-    .catch(err => dispatch({
-      type: types.GET_CURRENCY_ERROR
-    }))
-};
+export const getCurrencyAsync = () => ({
+  type: types.GET_CURRENCY
+});
 
 export const fillCurrencySuccess = (currency) => ({
   type: types.GET_CURRENCY_SUCCESS,
@@ -75,11 +42,10 @@ export const calculateCurrencyReverse = (currencyValue = 1 ) => ({
   payload: currencyValue
 });
 
-export const setActiveCurrencyListWithStorage = (activeCurrencyList = ['USD']) => (dispatch, getState) => {
-  dispatch(setActiveCurrencyList(activeCurrencyList));
-
-  localStorage.setItem('options', JSON.stringify(activeCurrencyList));
-}
+export const setActiveCurrencyListWithStorage = (activeCurrencyList = ['USD']) => ({
+  type: types.SET_ACTIVE_CURRENCY_LIST_WITH_STORAGE,
+  payload: activeCurrencyList
+})
 
 export const setActiveCurrencyList = (activeCurrencyList = ['USD']) => ({
   type: types.SET_ACTIVE_CURRENCY_LIST,

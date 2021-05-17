@@ -1,8 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { rootReducer } from './root';
+import { rootEpic, rootReducer } from './root';
 import thunk from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
+
+const epicMiddleWare = createEpicMiddleware();
 
 const logger = createLogger({
   duretion: true,
@@ -20,10 +23,12 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 const enhanced = devMode ? composeWithDevTools : compose;
 
-const middleware = [ thunk ];
+const middleware = [ thunk, epicMiddleWare ];
 
 devMode && middleware.push(logger);
 
 const enhancedStore = enhanced(applyMiddleware(...middleware));
 
 export const store = createStore(rootReducer, enhancedStore);
+
+epicMiddleWare.run(rootEpic);
