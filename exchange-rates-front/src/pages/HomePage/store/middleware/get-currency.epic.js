@@ -1,7 +1,7 @@
 import { ofType } from "redux-observable";
 import { types } from "../types";
-import { catchError, finalize, map, mapTo, mergeMap, switchMap, tap } from "rxjs/operators";
-import { iif, of } from "rxjs";
+import { catchError, map, mergeMap, switchMap, tap } from "rxjs/operators";
+import { concat, EMPTY, iif, of } from "rxjs";
 import { ajax } from 'rxjs/ajax';
 import { calculateCurrency, fillCurrencyError, fillCurrencySuccess, setActiveCurrencyList } from "../actions";
 import { currentDateHelper } from "helpers/currentDateHelper";
@@ -31,7 +31,13 @@ export const getCurrencyEpic = ($action) => {
         )
       )
     ),
-    finalize(() => calculateCurrency()),
+    switchMap(action => {
+      return concat(
+        of(action),
+        of(calculateCurrency()),
+        !!localStorage.getItem('options') ? of(setActiveCurrencyList(JSON.parse(localStorage.getItem('options')))) : EMPTY
+      )
+    }),
     catchError((err) => {
       console.error(err);
       return of(fillCurrencyError());
