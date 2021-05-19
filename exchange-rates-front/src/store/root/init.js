@@ -6,7 +6,8 @@ import { currencyRangeReducer as currencyRange } from 'pages/CurrencyPage/store/
 import { combineEpics } from 'redux-observable';
 
 import { homeEpic } from 'pages/HomePage/store/middleware';
+import { getCurrencyRangeEpic as currencyEpic } from 'pages/CurrencyPage/store/middleware';
 
 export const rootReducer = combineReducers({ currency, currencyRange });
 
-export const rootEpic = combineEpics(homeEpic);
+export const rootEpic = combineEpics(homeEpic, currencyEpic);
