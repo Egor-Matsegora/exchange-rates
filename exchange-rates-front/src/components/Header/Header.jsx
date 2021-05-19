@@ -9,7 +9,7 @@ import { Filter } from "shared/Filter";
 import {
   filterCurrency,
   abortFiltration,
-  setActiveCurrencyListWithStorage
+  setActiveCurrencyList
 } from "pages/HomePage/store/actions";
 
 import './Header.sass';
@@ -20,14 +20,16 @@ const mapStateToProps = (state) => ({
   activeCurrencyList: state.currency.activeCurrencyList
 })
 const mapDispatchToProps = (dispatch) => (
-  { actions: bindActionCreators({ filterCurrency, abortFiltration, setActiveCurrencyListWithStorage }, dispatch)}
+  { actions: bindActionCreators({ filterCurrency, abortFiltration, setActiveCurrencyList }, dispatch)}
 );
 
 const Header = ({actions, currency, activeCurrencyList}) => {
   const url = useLocation().pathname;
   const history = useHistory();
+  const [listChanged, setLitChanged] = useState(false);
 
   const [filterString, setFilterString] = useState(history.location.search.split('=')[1] || '');
+
 
   useEffect(() => {
     if(!currency.length) return;
@@ -43,7 +45,15 @@ const Header = ({actions, currency, activeCurrencyList}) => {
         path: '/'
       })
     }
-  }, [filterString, history, actions])
+  }, [currency, filterString, history, actions])
+
+  useEffect(
+    () => {
+      if(!listChanged) return;
+      localStorage.setItem('options', JSON.stringify(activeCurrencyList))
+    },
+    [listChanged, activeCurrencyList]
+  )
 
   return (
     <header className="header">
@@ -70,7 +80,10 @@ const Header = ({actions, currency, activeCurrencyList}) => {
           <Options
             currency={ currency }
             activeCurrencyList={ activeCurrencyList }
-            setActiveCurrencyList={ actions.setActiveCurrencyListWithStorage }
+            setActiveCurrencyList={ (e) => {
+              actions.setActiveCurrencyList(e);
+              setLitChanged(true);
+            }}
           />
         </div>
       </div>

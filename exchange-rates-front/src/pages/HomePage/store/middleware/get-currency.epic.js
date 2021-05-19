@@ -3,7 +3,7 @@ import { types } from "../types";
 import { catchError, map, mergeMap, switchMap, tap } from "rxjs/operators";
 import { concat, EMPTY, iif, of } from "rxjs";
 import { ajax } from 'rxjs/ajax';
-import { calculateCurrency, fillCurrencyError, fillCurrencySuccess, setActiveCurrencyList } from "../actions";
+import { fillCurrencyError, fillCurrencySuccess, setActiveCurrencyList } from "../actions";
 import { currentDateHelper } from "helpers/currentDateHelper";
 
 export const getCurrencyEpic = ($action) => {
@@ -34,7 +34,6 @@ export const getCurrencyEpic = ($action) => {
     switchMap(action => {
       return concat(
         of(action),
-        of(calculateCurrency()),
         !!localStorage.getItem('options') ? of(setActiveCurrencyList(JSON.parse(localStorage.getItem('options')))) : EMPTY
       )
     }),

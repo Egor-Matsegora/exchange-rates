@@ -1,6 +1,4 @@
 import { types } from '../types';
-import { api } from 'api';
-import { currentDateHelper } from 'helpers/currentDateHelper';
 
 
 export const getCurrencyAsync = () => ({
@@ -41,11 +39,6 @@ export const calculateCurrencyReverse = (currencyValue = 1 ) => ({
   type: types.CALCULATE_CURRENCY_REVERSE,
   payload: currencyValue
 });
-
-export const setActiveCurrencyListWithStorage = (activeCurrencyList = ['USD']) => ({
-  type: types.SET_ACTIVE_CURRENCY_LIST_WITH_STORAGE,
-  payload: activeCurrencyList
-})
 
 export const setActiveCurrencyList = (activeCurrencyList = ['USD']) => ({
   type: types.SET_ACTIVE_CURRENCY_LIST,

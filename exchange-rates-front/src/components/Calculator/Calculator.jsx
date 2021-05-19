@@ -14,14 +14,14 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators({ setBaseCurrency, calculateCurrency, calculateCurrencyReverse }, dispatch)});
 
-const Calculator = ({ baseCurrencyName, calculatedValue, currency, loading, actions }) => {
+const Calculator = ({ baseCurrencyName, calculatedValue, currency, actions }) => {
   const [ currentValue, setCurrentValue ] = useState(1);
   const [ reverse, setReverse ] = useState(false);
 
   useEffect(() => {
     if(!currency.length) return;
     reverse ? actions.calculateCurrencyReverse(currentValue) : actions.calculateCurrency(currentValue)
-  }, [actions, currentValue, reverse]);
+  }, [actions, currency, currentValue, reverse]);
 
   const setBase = (e) => {
     actions.setBaseCurrency(e.value);
