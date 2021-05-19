@@ -26,13 +26,14 @@ const mapDispatchToProps = (dispatch) => (
 const Header = ({actions, currency, activeCurrencyList}) => {
   const url = useLocation().pathname;
   const history = useHistory();
-  const [listChanged, setLitChanged] = useState(false);
+  const [listChanged, setListChanged] = useState(false);
+  const [filterChanged, setFilterChanged] = useState(false);
 
   const [filterString, setFilterString] = useState(history.location.search.split('=')[1] || '');
 
 
   useEffect(() => {
-    if(!currency.length) return;
+    if(!currency.length || !filterChanged) return;
     if (filterString) {
       actions.filterCurrency(filterString);
       history.push({
@@ -45,7 +46,7 @@ const Header = ({actions, currency, activeCurrencyList}) => {
         path: '/'
       })
     }
-  }, [currency, filterString, history, actions])
+  }, [currency, filterString, history, actions, filterChanged])
 
   useEffect(
     () => {
@@ -54,6 +55,16 @@ const Header = ({actions, currency, activeCurrencyList}) => {
     },
     [listChanged, activeCurrencyList]
   )
+
+  const handleFiltration = (event) => {
+    setFilterString(event);
+    setFilterChanged(true);
+  }
+
+  const handleChangeActiveCurrencyList = (e) => {
+    actions.setActiveCurrencyList(e);
+    setListChanged(true);
+  }
 
   return (
     <header className="header">
@@ -71,7 +82,7 @@ const Header = ({actions, currency, activeCurrencyList}) => {
           <div className="header__nav-item">
             <Filter
               defaultFilterValue={ filterString }
-              filterCurrency={ setFilterString }
+              filterCurrency={ handleFiltration }
               abortFiltration={ () => setFilterString('') }
             />
           </div>
@@ -80,10 +91,7 @@ const Header = ({actions, currency, activeCurrencyList}) => {
           <Options
             currency={ currency }
             activeCurrencyList={ activeCurrencyList }
-            setActiveCurrencyList={ (e) => {
-              actions.setActiveCurrencyList(e);
-              setLitChanged(true);
-            }}
+            setActiveCurrencyList={ handleChangeActiveCurrencyList }
           />
         </div>
       </div>

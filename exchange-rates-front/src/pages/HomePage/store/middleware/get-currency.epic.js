@@ -14,7 +14,6 @@ export const getCurrencyEpic = ($action) => {
           () => !!localStorage.getItem(currentDate),
           of(fillCurrencySuccess(JSON.parse(localStorage.getItem(currentDate)))),
           ajax.getJSON('https://www.cbr-xml-daily.ru/daily_json.js').pipe(
-            tap(console.log),
             map(res => {
               const currency = [];
 
